@@ -68,7 +68,18 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        print(starting_vertex)
+        visited.append(starting_vertex)
+        joins = self.vertices[starting_vertex]
+        if joins is None:
+          return None
+        for j in joins:
+          if j in visited:
+            pass
+          else:
+            self.dft_recursive(j,visited)
+
+            
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from

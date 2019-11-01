@@ -11,24 +11,57 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        if vertex not in self.vertices.keys():
+          self.vertices[vertex] = set()
+        else:
+          pass
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        if v1 and v2 in self.vertices.keys():
+          #self.vertices[v2].add(v1)  #graph is directed so removed
+          self.vertices[v1].add(v2)
+
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        if starting_vertex is None:
+          return None
+        my_q = Queue()
+        visited = [starting_vertex]
+        my_q.enqueue(starting_vertex)
+        while len(my_q.queue) > 0:
+          point = my_q.queue[0]
+          joins = self.vertices[point]
+          for j in joins:
+            if j not in visited:
+              my_q.enqueue(j)
+              visited.append(j)
+          print(my_q.dequeue())
+
+
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        if starting_vertex is None:
+          return None
+        my_s = Stack()
+        visited = [starting_vertex]
+        my_s.push(starting_vertex)
+        while len(my_s.stack) > 0:
+          point = my_s.stack[-1]
+          joins = self.vertices[point]
+          print(my_s.pop())
+          for j in joins:
+            if j not in visited:
+              my_s.push(j)
+              visited.append(j)
+
     def dft_recursive(self, starting_vertex):
         """
         Print each vertex in depth-first order

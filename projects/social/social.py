@@ -44,11 +44,29 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
+        variability = avgFriendships//2
 
-        # Add users
-
-        # Create friendships
+        import random
+        for n in range(numUsers):
+          self.addUser(n)
+        for user in self.users:
+            #using adjustment factor to bring average back into line
+          num_friends = random.choice(range(avgFriendships-variability,avgFriendships+variability)) - (2*avgFriendships//10)
+          if user in self.friendships.keys():
+            existing_friends_len = len(self.friendships[user])
+            existing_friends = set(self.friendships[user])
+          else:
+            existing_friends_len = 0
+            existing_friends = set()
+          
+          num_friends = max(0,num_friends-existing_friends_len)
+          users_ex_user = set(self.users.keys())
+          users_ex_user.remove(user)
+          for ef in existing_friends:
+            users_ex_user.remove(ef)
+          user_friends = set(random.sample(users_ex_user,num_friends))
+          for friend in user_friends:
+            self.addFriendship(user,friend)
 
     def getAllSocialPaths(self, userID):
         """

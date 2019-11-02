@@ -1,4 +1,4 @@
-
+from util import Stack
 
 class User:
     def __init__(self, name):
@@ -77,8 +77,23 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
-        visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        visited = {} 
+        current_point = userID
+        s = Stack()
+        s.push([userID])
+        while s.size()>0:
+          current_point = s.stack[-1][-1]
+          joins = self.friendships[current_point]
+          new_paths = []
+          for j in joins:
+            if j not in visited.keys():
+              _ = [x for x in s.stack[-1]]
+              _.append(j)
+              new_paths.append(_)
+          visited[current_point] = s.pop()
+          for np in new_paths:
+            s.push(np)
+
         return visited
 
 

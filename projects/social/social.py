@@ -87,10 +87,24 @@ class SocialGraph:
           new_paths = []
           for j in joins:
             if j not in visited.keys():
-              _ = [x for x in s.stack[-1]]
-              _.append(j)
-              new_paths.append(_)
-          visited[current_point] = s.pop()
+                _ = [x for x in s.stack[-1]]
+                _.append(j)
+                new_paths.append(_)
+            else:
+                _ = [x for x in s.stack[-1]]
+                _.append(j)
+                if len(_)<len(visited[j]):
+                    visited[j]=_
+                else:
+                    pass
+          placeholder = s.pop()
+          if current_point not in visited.keys():
+            visited[current_point] = placeholder
+          else:
+            if len(visited[current_point])> len(placeholder):
+              visited[current_point] = placeholder
+            else:
+              pass
           for np in new_paths:
             s.push(np)
 

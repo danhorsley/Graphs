@@ -79,21 +79,54 @@ class Graph:
           else:
             self.dft_recursive(j,visited)
 
-            
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        q = Queue()
+        q.enqueue([starting_vertex])
+        
+        while destination_vertex not in q.queue[0]:
+          current_point = q.queue[0][-1]
+          joins = self.vertices[current_point]
+          for j in joins:
+            _ = [x for x in q.queue[0]]
+            _.append(j)
+            q.enqueue(_)
+          q.dequeue()
+
+        return q.queue[0]
+
+
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        s = Stack()
+        s.push([starting_vertex])
+        
+        while destination_vertex not in s.stack[-1]:
+          current_point = s.stack[-1][-1]
+          
+          joins = self.vertices[current_point]
+          if joins is None:
+            s.pop()
+          else:
+            temp_list = []
+            for j in joins:
+              _ = [x for x in s.stack[-1]]
+              _.append(j)
+              temp_list.append(_)
+            for tl in temp_list:
+              s.push(tl)
+          #s.pop()
+
+        return s.stack[-1]
 
 
 

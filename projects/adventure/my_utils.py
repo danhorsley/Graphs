@@ -168,22 +168,27 @@ def roomgraph_to_graph(roomGraph):
   return my_graph
 
 def connect_the_dots(path, graph):
-  n = len(path)
-  working_path = []
-  for i in range(n-1):
-    if path[i+1] in graph.vertices[path[i]]:
-      working_path.append(path[i])
-    else:
-      backtrack = graph.bfs(path[i],path[i+1])
-      for b in backtrack[:-1]:
-        working_path.append(b)
-  return working_path
+    n = len(path)
+    working_path = []
+    for i in range(n-1):
+        if path[i+1] in graph.vertices[path[i]]:
+            working_path.append(path[i])
+        else:
+            backtrack = graph.bfs(path[i],path[i+1])
+            for b in backtrack[:-1]:
+                working_path.append(b)
+    if working_path[-1]!=path[-1]:
+        working_path.append(path[-1])
+    return working_path
 
-def dirs_for_path(my_list,world):
-  point = my_list[0]
+def dirs_for_path(my_list,rg):
+  old_point = my_list[0]
   dirs = []
   for i in range(1,len(my_list)):
-    for d in world.rg[point][1]:
-      if world.rg[point][1][d]==my_list[i]:
+    #print(i)
+    for d in rg[old_point][1]:
+      #print(rg[old_point][1])
+      if rg[old_point][1][d]==my_list[i]:
         dirs.append(d)
+    old_point = my_list[i]
   return dirs

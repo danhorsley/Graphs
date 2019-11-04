@@ -132,9 +132,10 @@ class Graph:
           current_point = q.queue[0][-1]
           joins = self.vertices[current_point]
           for j in joins:
-            _ = [x for x in q.queue[0]]
-            _.append(j)
-            q.enqueue(_)
+            if j not in q.queue[0]:
+                _ = [x for x in q.queue[0]]
+                _.append(j)
+                q.enqueue(_)
           q.dequeue()
 
         return q.queue[0]

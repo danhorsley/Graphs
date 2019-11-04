@@ -1,3 +1,4 @@
+import random
 class Queue():
     def __init__(self):
         self.queue = []
@@ -49,6 +50,7 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
+        ret_list = []
         if starting_vertex is None:
           return None
         my_q = Queue()
@@ -61,11 +63,14 @@ class Graph:
             if j not in visited:
               my_q.enqueue(j)
               visited.append(j)
-          print(my_q.dequeue())
+          #print(my_q.dequeue())
+          ret = my_q.dequeue()
+          ret_list.append(ret)
+        return ret_list
           
 
 
-    def dft(self, starting_vertex):
+    def dft(self, starting_vertex, chooser=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
@@ -82,6 +87,12 @@ class Graph:
           r = my_s.pop()   ##new code
           ret_list.append(r)  ##new code
           #print(r)  ##changed to r from pop
+          if chooser is None:
+            pass
+          elif chooser == 'random':
+            joins = random.sample(joins,len(joins))
+          elif chooser == 'shortest':
+            joins = find_longest_clique(point,self,visited)
           for j in joins:
             if j not in visited:
               my_s.push(j)
@@ -192,3 +203,18 @@ def dirs_for_path(my_list,rg):
         dirs.append(d)
     old_point = my_list[i]
   return dirs
+
+def find_longest_clique(node,parent_graph,visited = []):
+  joins = parent_graph.vertices[node]
+  joins = [x for x in joins if x not in visited]
+  join_dict = {}
+  for j in joins:
+    new_graph = Graph()
+    exclude_list = [y for y in joins if y!=j]
+    new_node_list = [x for x in parent_graph.vertices if x not in visited or exclude_list]
+    for nn in new_node_list:
+      new_graph.vertices[nn] = set([z for z in parent_graph.vertices[nn] if z not in (visited+exclude_list)])
+    join_dict[j] = len(new_graph.bft(j))
+  ret = sorted(join_dict.items(), key=lambda kv: kv[1],reverse=True)
+  ret = [x[0] for x in ret]
+  return ret

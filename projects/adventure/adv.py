@@ -23,7 +23,7 @@ player = Player("Name", world.startingRoom)
 
 from my_utils import *
 g = roomgraph_to_graph(roomGraph)
-path = g.dft(0)
+path = g.dft(0,chooser = 'shortest')
 connected = connect_the_dots(path,g)
 
 traversalPath = dirs_for_path(connected,roomGraph)

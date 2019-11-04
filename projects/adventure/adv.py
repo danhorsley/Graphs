@@ -45,7 +45,10 @@ else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL")
     print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
 
-
+#jj = json.dumps(traversalPath)
+f = open("paths_best.txt","w")
+f.write( str(traversalPath) )
+f.close()
 
 #######
 # UNCOMMENT TO WALK AROUND
